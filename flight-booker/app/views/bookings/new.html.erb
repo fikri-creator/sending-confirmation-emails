@@ -1,0 +1,35 @@
+<h1>Book flight #<%= @flight.id %></h1>
+
+<p>
+  <strong><%= @flight.from_airport %> → <%= @flight.to_airport %></strong><br>
+  Departure: <%= @flight.departure.strftime("%a %d %b %Y %H:%M") %><br>
+  Duration: <%= @flight.duration %> minutes
+</p>
+
+<%= form_with model: [@flight, @booking], local: true do |f| %>
+  <% if @booking.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@booking.errors.count, "error") %> stopped this booking:</h2>
+      <ul>
+        <% @booking.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h3>Passenger details</h3>
+  <%= f.fields_for :passengers do |p| %>
+    <fieldset style="margin-bottom: 12px">
+      <legend>Passenger <%= p.index + 1 %></legend>
+      <div>
+        <%= p.label :name %>
+        <%= p.text_field :name %>
+      </div>
+      <div>
+        <%= p.label :email %>
+        <%= p.email_field :email %>
+      </div>
+    </fieldset>
+  <% end %>
+
+  <%= f.submit "Confirm booking" %>
+<% end %>

@@ -1,0 +1,67 @@
+<h1>Search flights</h1>
+
+<%= form_with url: flights_path, scope: :flight, method: :get, local: true do |f| %>
+  <div>
+    <%= f.label :from_airport, "From" %>
+    <%= f.select :from_airport,
+                 options_for_select(@airports, params.dig(:flight, :from_airport)),
+                 include_blank: true %>
+  </div>
+
+  <div>
+    <%= f.label :to_airport, "To" %>
+    <%= f.select :to_airport,
+                 options_for_select(@airports, params.dig(:flight, :to_airport)),
+                 include_blank: true %>
+  </div>
+
+  <div>
+    <%= f.label :passengers, "Passengers" %>
+    <%= f.select :passengers,
+                 options_for_select(@passenger_options, params.dig(:flight, :passengers) || 1) %>
+  </div>
+
+  <div>
+    <%= f.label :departure, "Departure date (optional)" %>
+    <%= f.date_field :departure, value: params.dig(:flight, :departure) %>
+  </div>
+
+  <%= f.submit "Search" %>
+<% end %>
+
+<% if params[:commit].present? %>
+  <h2>Available flights</h2>
+  <% if @flights.any? %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>To</th>
+          <th>Departure</th>
+          <th>Duration</th>
+          <th>Capacity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @flights.each do |flight| %>
+          <tr>
+            <td><%= flight.from_airport %></td>
+            <td><%= flight.to_airport %></td>
+            <td><%= flight.departure.strftime("%a %d %b %Y %H:%M") %></td>
+            <td><%= flight.duration %> min</td>
+            <td><%= flight.capacity %></td>
+            <td>
+              <%= button_to "Book",
+                            new_flight_booking_path(flight_id: flight.id,
+                                                    passengers: params.dig(:flight, :passengers) || 1),
+                            method: :get %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No flights match your search.</p>
+  <% end %>
+<% end %>

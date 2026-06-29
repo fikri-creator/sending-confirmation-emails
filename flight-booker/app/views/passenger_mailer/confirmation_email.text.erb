@@ -1,0 +1,19 @@
+You have booked your ticket
+==========================
+
+Hi <%= @passenger.name %>,
+
+Thanks for booking with Flight Booker. Your seat is confirmed.
+
+  From:        <%= @flight.from_airport %>
+  To:          <%= @flight.to_airport %>
+  Departure:   <%= @flight.departure.strftime("%a, %d %b %Y %H:%M") %>
+  Arrival:     <%= @flight.arrival.strftime("%a, %d %b %Y %H:%M") %>
+  Duration:    <%= @flight.duration %> minutes
+  Booking ref: #<%= @flight.id %>
+
+Please arrive at the airport at least 90 minutes before departure.
+
+--
+Flight Booker
+Automated message — please do not reply.

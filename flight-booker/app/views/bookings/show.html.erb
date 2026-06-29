@@ -1,0 +1,19 @@
+<h1>Booking #<%= @booking.id %> confirmed</h1>
+
+<p>A confirmation email has been sent to each passenger below. Open <code>tmp/letter_opener</code> to view them.</p>
+
+<h3>Flight</h3>
+<ul>
+  <li><strong>Route:</strong> <%= @booking.flight.from_airport %> → <%= @booking.flight.to_airport %></li>
+  <li><strong>Departure:</strong> <%= @booking.flight.departure.strftime("%a %d %b %Y %H:%M") %></li>
+  <li><strong>Arrival:</strong> <%= @booking.flight.arrival.strftime("%a %d %b %Y %H:%M") %></li>
+</ul>
+
+<h3>Passengers</h3>
+<ul>
+  <% @booking.passengers.each do |p| %>
+    <li><%= p.name %> &lt;<%= p.email %>&gt;</li>
+  <% end %>
+</ul>
+
+<p><%= link_to "Book another flight", root_path %></p>

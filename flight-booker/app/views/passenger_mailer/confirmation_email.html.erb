@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Booking confirmation</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: #222; line-height: 1.5; padding: 24px; }
+      h1   { color: #0a6dbf; margin-bottom: 0; }
+      .card { border: 1px solid #e1e4e8; border-radius: 8px; padding: 16px 20px; max-width: 520px; }
+      dl { display: grid; grid-template-columns: 130px 1fr; gap: 6px 12px; margin: 0; }
+      dt { font-weight: bold; color: #555; }
+      dd { margin: 0; }
+      .footer { color: #777; font-size: 12px; margin-top: 24px; }
+    </style>
+  </head>
+  <body>
+    <h1>You have booked your ticket ✈️</h1>
+    <p>Hi <%= @passenger.name %>,</p>
+    <p>Thanks for booking with Flight Booker. Your seat is confirmed — see the details below.</p>
+
+    <div class="card">
+      <dl>
+        <dt>From</dt>      <dd><%= @flight.from_airport %></dd>
+        <dt>To</dt>        <dd><%= @flight.to_airport %></dd>
+        <dt>Departure</dt> <dd><%= @flight.departure.strftime("%a, %d %b %Y %H:%M") %></dd>
+        <dt>Arrival</dt>   <dd><%= @flight.arrival.strftime("%a, %d %b %Y %H:%M") %></dd>
+        <dt>Duration</dt>  <dd><%= @flight.duration %> minutes</dd>
+        <dt>Booking ref</dt><dd>#<%= @flight.id %></dd>
+      </dl>
+    </div>
+
+    <p>Please arrive at the airport at least 90 minutes before departure.</p>
+
+    <p class="footer">
+      Sent by Flight Booker • This is an automated message, please do not reply.
+    </p>
+  </body>
+</html>
